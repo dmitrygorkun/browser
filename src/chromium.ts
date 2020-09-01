@@ -4,7 +4,7 @@ import {ChromiumPage} from "./page";
 
 export class Chromium {
 
-    private browser: PuppeteerBrowser;
+    #browser: PuppeteerBrowser;
 
     private get args(): string[] {
         return [
@@ -21,7 +21,7 @@ export class Chromium {
 
     async initialize() {
         const loader = terminal.loader('Launching the browser.');
-        this.browser = await launch({ args: this.args });
+        this.#browser = await launch({ args: this.args });
         loader.succeed('The browser initialized.');
     }
 
@@ -35,11 +35,11 @@ export class Chromium {
 
     async emptyPage(): Promise<ChromiumPage> {
 
-        if (!this.browser) {
+        if (!this.#browser) {
             throw new Error('You must call initialize() before you can use the goto');
         }
 
-        const page = await this.browser.newPage();
+        const page = await this.#browser.newPage();
         await page.emulate(devices['iPad Pro landscape']);
 
         return new ChromiumPage(page);
@@ -47,12 +47,12 @@ export class Chromium {
 
     async close(): Promise<void> {
 
-        if (!this.browser) {
+        if (!this.#browser) {
             return;
         }
 
         const loader = terminal.loader('Closing the browser.');
-        await this.browser.close();
+        await this.#browser.close();
         loader.succeed('The browser closed.');
     }
 }
