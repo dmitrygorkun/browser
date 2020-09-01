@@ -1,2 +1,2 @@
-export * from "./chromium";
+export * from "./browser";
 export * from "./page";
