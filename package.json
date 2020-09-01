@@ -1,0 +1,33 @@
+{
+  "name": "@gorkun/browser",
+  "version": "1.0.4",
+  "description": "Small wrapper for working with browser for NodeJS.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/dmitrygorkun/browser.git",
+  "author": "Dmitry Gorkun <dmitry@gorkun.ru>",
+  "license": "UNLICENSED",
+  "private": false,
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "build": "tsc",
+    "prepublishOnly": "yarn run build",
+    "postpublish": "yarn run clean"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "bugs": {
+    "url": "https://github.com/dmitrygorkun/browser/issues"
+  },
+  "homepage": "https://github.com/dmitrygorkun/browser#readme",
+  "dependencies": {
+    "@gorkun/terminal": "^0.0.6",
+    "puppeteer": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.6.2",
+    "@types/puppeteer": "^3.0.1",
+    "typescript": "^4.0.2"
+  }
+}
