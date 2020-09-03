@@ -1,4 +1,4 @@
-import {Browser as PuppeteerBrowser, launch, devices} from "puppeteer";
+import {Browser as PuppeteerBrowser, launch} from "puppeteer";
 import {terminal} from "@gorkun/terminal";
 import {ChromiumPage} from "./page";
 
@@ -6,22 +6,21 @@ export class Browser {
 
     #browser: PuppeteerBrowser;
 
-    private get args(): string[] {
-        return [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-infobars',
-            '--incognito',
-            `--user-agent="${this.userAgent}"`
-        ];
-    }
-
     constructor(private readonly userAgent: string) {
     }
 
     async initialize() {
         const loader = terminal.loader('Launching the browser.');
-        this.#browser = await launch({ args: this.args });
+
+        this.#browser = await launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-infobars',
+                '--incognito'
+            ]
+        });
+
         loader.succeed('The browser initialized.');
     }
 
@@ -40,7 +39,7 @@ export class Browser {
         }
 
         const page = await this.#browser.newPage();
-        await page.emulate(devices['iPad Pro landscape']);
+        await page.setUserAgent(this.userAgent);
 
         return new ChromiumPage(page);
     }
