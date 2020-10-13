@@ -27,11 +27,15 @@ export class ChromiumPage {
         await this.page.click(selector);
     }
 
-    async waitForNavigation(timeout: number = 500): Promise<void> {
+    async waitForNavigation(timeout: number = 1000): Promise<void> {
         await this.page.waitForNavigation({
             timeout,
             waitUntil: 'domcontentloaded'
         });
+    }
+
+    async waitForSelector(selector: string, timeout: number = 1000): Promise<void> {
+        await this.page.waitForSelector(selector, {timeout});
     }
 
     var(name: string): Promise<any> {
